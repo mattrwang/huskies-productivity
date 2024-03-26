@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Flex,
   FormControl,
@@ -22,6 +22,14 @@ const SignUp = () => {
   const [teamCode, setTeamCode] = useState("");
 
   const toast = useToast();
+
+  useEffect(() => {
+    const logout = async () => {
+      await axios.post("/logout");
+    };
+
+    logout();
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -88,7 +96,10 @@ const SignUp = () => {
             <Heading size="lg" color="white">
               Sign Up
             </Heading>
-            <HStack spacing={10}>
+            <HStack
+              spacing={{ base: 6, md: 10 }}
+              flexDir={{ base: "column", md: "row" }}
+            >
               <VStack maxW="220px">
                 <FormControl id="fullName">
                   <FormLabel color="white">Full Name</FormLabel>
@@ -119,8 +130,19 @@ const SignUp = () => {
                 minWidth="1px"
                 bg="nugray.300"
                 alignSelf="stretch"
+                display={{ base: "none", md: "block" }}
+                rounded="md"
               />
-              <VStack maxW="220px" mt="-75px">
+              <Divider
+                orientation="horizontal"
+                minHeight="1px"
+                width="auto"
+                bg="nugray.300"
+                alignSelf="stretch"
+                display={{ base: "block", md: "none" }}
+                rounded="md"
+              />
+              <VStack maxW="220px" mt={{ base: "none", md: "-75px" }}>
                 <Text align="center">
                   Ask your coaches or captains for a team code!
                 </Text>

@@ -18,6 +18,14 @@ model User {
   username  String   @unique
   name      String
   password  String
-  code      String
   createdAt DateTime @default(now())
+  team      Team     @relation("UserTeam", fields: [teamId], references: [id])
+  teamId    Int
+}
+
+model Team {
+  id    Int    @id @default(autoincrement())
+  name  String
+  code  String @unique
+  users User[] @relation("UserTeam")
 }

@@ -15,13 +15,21 @@ const signupUser = async (req, res) => {
     if (exist) {
       return res.json({ error: "Username already taken." });
     }
+    const team = await prisma.team.findUnique({
+      where: {
+        code,
+      },
+    });
+    if (!team) {
+      return res.json({ error: "Team not found." });
+    }
     const hashedPassword = await hashPassword(password);
     const user = await prisma.user.create({
       data: {
         username,
         name,
         password: hashedPassword,
-        code,
+        teamId: team.id,
       },
     });
     return res.json({ message: "User created successfully", user });
