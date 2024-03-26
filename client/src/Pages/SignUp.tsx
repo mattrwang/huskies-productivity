@@ -25,25 +25,57 @@ const SignUp = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     if (!fullName || !username || !password || !teamCode) {
-      event.preventDefault();
       toast({
         title: "Error",
-        description: "Please fill in all fields.",
+        description: "All fields are required.",
         status: "error",
         duration: 2000,
         isClosable: true,
         position: "bottom-right",
       });
-    } else {
-      try {
-        const response = await axios.get("/test");
-        alert(response.data.message);
-      } catch (error) {
-        console.log(error);
+      return;
+    }
+    if (password.length < 4) {
+      toast({
+        title: "Error",
+        description: "Password must be at least 4 characters long.",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+      return;
+    }
+    try {
+      const { data } = await axios.post("/signup", {
+        name: fullName,
+        username,
+        password,
+        code: teamCode,
+      });
+      if (data.error) {
+        toast({
+          title: "Error",
+          description: data.error,
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+          position: "bottom-right",
+        });
+      } else {
+        window.location.href = "/";
       }
-      console.log({ fullName, username, password, teamCode });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Error",
+        description: "An error occurred. Please try again.",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "bottom-right",
+      });
     }
   };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex, Image, Spacer, Button } from "@chakra-ui/react";
 import logo from "../Assets/Northeastern_Huskies_.svg";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom"; // Import RouterLink
 
 const NavBar = () => {
   return (
@@ -14,15 +14,28 @@ const NavBar = () => {
       maxH="75px"
       shadow="md"
     >
-      <Link to="/">
+      <RouterLink to="/">
         <Image src={logo} alt="Logo" boxSize="75px" />
-      </Link>
+      </RouterLink>
       <Spacer />
       <Flex gap="4">
-        <Button colorScheme="nured" variant="outline">
-          Login
+        <Button
+          as={RouterLink}
+          to="/login"
+          colorScheme="nured"
+          variant="outline"
+          width="85px"
+        >
+          Log In
         </Button>
-        <Button colorScheme="nured" color="white" variant="solid">
+        <Button
+          as={RouterLink}
+          to="/signup"
+          colorScheme="nured"
+          color="white"
+          variant="solid"
+          width="85px"
+        >
           Sign Up
         </Button>
       </Flex>
