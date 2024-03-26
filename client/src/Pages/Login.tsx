@@ -8,7 +8,6 @@ import {
   Heading,
   VStack,
   useToast,
-  Divider,
   Text,
   Link,
 } from "@chakra-ui/react";
@@ -89,23 +88,6 @@ const Login = () => {
                 />
               </FormControl>
             </VStack>
-            <Divider
-              orientation="vertical"
-              height="auto"
-              minWidth="1px"
-              bg="nugray.300"
-              alignSelf="stretch"
-            />
-
-            <Button
-              mt={4}
-              colorScheme="nured"
-              color="white"
-              type="submit"
-              width="85px"
-            >
-              Log In
-            </Button>
             <Text>
               No account?{" "}
               <Link
@@ -117,6 +99,15 @@ const Login = () => {
                 Create one!
               </Link>
             </Text>
+            <Button
+              mt={4}
+              colorScheme="nured"
+              color="white"
+              type="submit"
+              width="85px"
+            >
+              Log In
+            </Button>
           </VStack>
         </form>
       </Flex>

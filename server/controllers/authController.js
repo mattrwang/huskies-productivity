@@ -54,7 +54,8 @@ const loginUser = async (req, res) => {
     if (!match) {
       return res.json({ error: "Incorrect password." });
     }
-    return res.json(user);
+    req.session.userId = user.id;
+    return res.json({ message: "Logged in successfully" });
   } catch (error) {
     console.log(error);
   }

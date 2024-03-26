@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Flex, Image, Spacer, Button } from "@chakra-ui/react";
 import logo from "../Assets/Northeastern_Huskies_.svg";
-import { Link as RouterLink } from "react-router-dom"; // Import RouterLink
+import { Link as RouterLink } from "react-router-dom";
+import { isLoggedIn } from "../auth";
+import axios from "axios";
 
 const NavBar = () => {
+  const [auth, setAuth] = React.useState<boolean | null>(null);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const isAuthenticated = await isLoggedIn();
+      setAuth(isAuthenticated);
+    };
+
+    checkAuth();
+  }, []);
+
+  const handleLogout = async () => {
+    await axios.post("/logout");
+    window.location.href = "/login";
+  };
+
   return (
     <Flex
       as="nav"
@@ -18,27 +36,38 @@ const NavBar = () => {
         <Image src={logo} alt="Logo" boxSize="75px" />
       </RouterLink>
       <Spacer />
-      <Flex gap="4">
+      {auth ? (
         <Button
-          as={RouterLink}
-          to="/login"
           colorScheme="nured"
           variant="outline"
           width="85px"
+          onClick={handleLogout}
         >
-          Log In
+          Log Out
         </Button>
-        <Button
-          as={RouterLink}
-          to="/signup"
-          colorScheme="nured"
-          color="white"
-          variant="solid"
-          width="85px"
-        >
-          Sign Up
-        </Button>
-      </Flex>
+      ) : (
+        <Flex gap="4">
+          <Button
+            as={RouterLink}
+            to="/login"
+            colorScheme="nured"
+            variant="outline"
+            width="85px"
+          >
+            Log In
+          </Button>
+          <Button
+            as={RouterLink}
+            to="/signup"
+            colorScheme="nured"
+            color="white"
+            variant="solid"
+            width="85px"
+          >
+            Sign Up
+          </Button>
+        </Flex>
+      )}
     </Flex>
   );
 };
