@@ -14,11 +14,14 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import axios from "axios";
+import { useAuth } from "../Context/AuthContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const toast = useToast();
+
+  const { login } = useAuth();
 
   useEffect(() => {
     const logout = async () => {
@@ -54,6 +57,7 @@ const Login = () => {
             position: "bottom-right",
           });
         } else {
+          login(data.id, data.username, data.name);
           window.location.href = "/";
         }
       } catch (error) {

@@ -5,7 +5,6 @@ const {
   signupUser,
   loginUser,
   logoutUser,
-  authCheck,
   createTeam,
 } = require("../controllers/authController");
 
@@ -15,6 +14,12 @@ router.post("/signup", signupUser);
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
 router.post("/create", createTeam);
-router.get("/auth/check", authCheck);
+router.get("/auth/check", (req, res) => {
+  if (req.session.userId) {
+    res.json({ isLoggedIn: true });
+  } else {
+    res.json({ isLoggedIn: false });
+  }
+});
 
 module.exports = router;

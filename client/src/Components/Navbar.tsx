@@ -1,23 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Flex, Image, Spacer, Button } from "@chakra-ui/react";
 import logo from "../Assets/Northeastern_Huskies_.svg";
 import { Link as RouterLink } from "react-router-dom";
-import { isLoggedIn } from "../auth";
 import axios from "axios";
+import { useAuth } from "../Context/AuthContext";
 
 const NavBar = () => {
-  const [auth, setAuth] = React.useState<boolean | null>(null);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const isAuthenticated = await isLoggedIn();
-      setAuth(isAuthenticated);
-    };
-
-    checkAuth();
-  }, []);
+  const { user, logout } = useAuth();
 
   const handleLogout = async () => {
+    logout();
     await axios.post("/logout");
     window.location.href = "/login";
   };
@@ -36,7 +28,7 @@ const NavBar = () => {
         <Image src={logo} alt="Logo" boxSize="75px" />
       </RouterLink>
       <Spacer />
-      {auth ? (
+      {user ? (
         <Button
           colorScheme="nured"
           variant="outline"

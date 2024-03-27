@@ -64,7 +64,7 @@ const loginUser = async (req, res) => {
       return res.json({ error: "Incorrect password." });
     }
     req.session.userId = user.id;
-    return res.json({ message: "Logged in successfully" });
+    return res.json(user);
   } catch (error) {
     console.log(error);
   }
@@ -75,14 +75,6 @@ const logoutUser = (req, res) => {
     req.session.destroy();
   }
   res.json({ message: "Logged out successfully" });
-};
-
-const authCheck = (req, res) => {
-  if (req.session.userId) {
-    res.json({ isLoggedIn: true });
-  } else {
-    res.json({ isLoggedIn: false });
-  }
 };
 
 const createTeam = async (req, res) => {
@@ -101,4 +93,4 @@ const createTeam = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, loginUser, logoutUser, authCheck, createTeam };
+module.exports = { signupUser, loginUser, logoutUser, createTeam };
