@@ -24,8 +24,17 @@ model User {
 }
 
 model Team {
-  id    Int    @id @default(autoincrement())
-  name  String
-  code  String @unique
-  users User[] @relation("UserTeam")
+  id        Int        @id @default(autoincrement())
+  name      String
+  code      String     @unique
+  users     User[]     @relation("UserTeam")
+  practices Practice[] @relation("PracticeTeam")
+}
+
+model Practice {
+  id       Int      @id @default(autoincrement())
+  teamId   Int
+  team     Team     @relation("PracticeTeam", fields: [teamId], references: [id])
+  location String
+  date     DateTime
 }

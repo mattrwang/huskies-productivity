@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const { PrismaClient } = require("@prisma/client");
 const { hashPassword, checkPassword } = require("../helpers/auth");
+const { generateCode } = require("../helpers/code");
 
 const prisma = new PrismaClient();
 
@@ -69,4 +70,35 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, loginUser };
+const logoutUser = (req, res) => {
+  if (req.session) {
+    req.session.destroy();
+  }
+  res.json({ message: "Logged out successfully" });
+};
+
+const authCheck = (req, res) => {
+  if (req.session.userId) {
+    res.json({ isLoggedIn: true });
+  } else {
+    res.json({ isLoggedIn: false });
+  }
+};
+
+const createTeam = async (req, res) => {
+  try {
+    const { teamName } = req.body;
+    const gen = generateCode();
+    const team = await prisma.team.create({
+      data: {
+        code: gen,
+        name: teamName,
+      },
+    });
+    res.json({ message: "Team created successfully", team });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+module.exports = { signupUser, loginUser, logoutUser, authCheck, createTeam };

@@ -12,6 +12,7 @@ import axios from "axios";
 import { ProtectedRoute } from "./Components/ProtectedRoute";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
+import NewTeam from "./Pages/NewTeam";
 
 axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.withCredentials = true;
@@ -30,6 +31,7 @@ export const App = () => (
         />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/create" element={<NewTeam />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

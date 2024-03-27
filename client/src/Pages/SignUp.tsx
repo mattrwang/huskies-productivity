@@ -11,8 +11,10 @@ import {
   HStack,
   Divider,
   Text,
+  Link,
 } from "@chakra-ui/react";
 import Navbar from "../Components/Navbar";
+import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
 
 const SignUp = () => {
@@ -142,17 +144,28 @@ const SignUp = () => {
                 display={{ base: "block", md: "none" }}
                 rounded="md"
               />
-              <VStack maxW="220px" mt={{ base: "none", md: "-75px" }}>
+              <VStack maxW="220px">
                 <Text align="center">
                   Ask your coaches or captains for a team code!
                 </Text>
-                <FormControl id="teamCode">
+                <FormControl id="teamCode" mb={{ base: "none", md: "60px" }}>
                   <FormLabel color="white">Team Code</FormLabel>
                   <Input
                     value={teamCode}
                     onChange={(e) => setTeamCode(e.target.value)}
                   />
                 </FormControl>
+                <Text fontSize="15px">
+                  <Link
+                    as={RouterLink}
+                    to="/create"
+                    color="nured.200"
+                    fontWeight="bold"
+                  >
+                    Click here
+                  </Link>{" "}
+                  to create a new team!
+                </Text>
               </VStack>
             </HStack>
 
