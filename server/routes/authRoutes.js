@@ -6,6 +6,7 @@ const {
   loginUser,
   logoutUser,
   createTeam,
+  getUser,
 } = require("../controllers/authController");
 
 router.use(cors({ credentials: true, origin: "http://localhost:3000" }));
@@ -21,5 +22,6 @@ router.get("/auth/check", (req, res) => {
     res.json({ isLoggedIn: false });
   }
 });
+router.get("/user", getUser);
 
 module.exports = router;

@@ -1,10 +1,14 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import Navbar from "../Components/Navbar";
+import { useAuth } from "../Context/AuthContext";
 
 const Home = () => {
+  const { user } = useAuth();
+
   return (
-    <Flex>
+    <Flex flexDir="column">
       <Navbar />
+      {user && <Text>Welcome, {user.id}</Text>}
     </Flex>
   );
 };

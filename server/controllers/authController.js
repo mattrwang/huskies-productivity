@@ -93,4 +93,24 @@ const createTeam = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, loginUser, logoutUser, createTeam };
+const getUser = async (req, res) => {
+  if (req.session && req.session.userId) {
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: req.session.userId,
+        },
+      });
+      if (user) {
+        return res.json(user);
+      }
+      return res.status(404).send("User not found");
+    } catch (error) {
+      console.error("Database or server error:", error);
+      return res.status(500).send("Internal server error");
+    }
+  }
+  return res.status(401).send("Not authenticated");
+};
+
+module.exports = { signupUser, loginUser, logoutUser, createTeam, getUser };

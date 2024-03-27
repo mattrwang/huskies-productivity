@@ -6,6 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 import { isLoggedIn } from "../auth";
+import axios from "axios";
 
 interface AuthContextType {
   user: any;
@@ -34,7 +35,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const checkAuth = async () => {
       const isAuthenticated = await isLoggedIn();
       if (isAuthenticated) {
-        setUser({ id: 5, username: "matt", name: "matt" });
+        const { data } = await axios.get("/user");
+        setUser({ id: data.id, username: data.username, name: data.name });
       }
     };
 
