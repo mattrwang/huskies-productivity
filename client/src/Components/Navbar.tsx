@@ -2,17 +2,11 @@ import React from "react";
 import { Flex, Image, Spacer, Button } from "@chakra-ui/react";
 import logo from "../Assets/Northeastern_Huskies_.svg";
 import { Link as RouterLink } from "react-router-dom";
-import axios from "axios";
 import { useAuth } from "../Context/AuthContext";
+import Profile from "./Profile";
 
-const NavBar = () => {
-  const { user, logout } = useAuth();
-
-  const handleLogout = async () => {
-    logout();
-    await axios.post("/logout");
-    window.location.href = "/login";
-  };
+const Navbar = () => {
+  const { user } = useAuth();
 
   return (
     <Flex
@@ -29,14 +23,7 @@ const NavBar = () => {
       </RouterLink>
       <Spacer />
       {user ? (
-        <Button
-          colorScheme="nured"
-          variant="outline"
-          width="85px"
-          onClick={handleLogout}
-        >
-          Log Out
-        </Button>
+        <Profile />
       ) : (
         <Flex gap="4">
           <Button
@@ -64,4 +51,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default Navbar;
